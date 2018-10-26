@@ -1,0 +1,32 @@
+{
+  "name": "kstrg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "cross-env NODE_ENV=dev nodemon app.js",
+    "prod": "cross-env NODE_ENV=prod pm2 start pm2.conf.json --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cross-env": "^5.1.4",
+    "jsonwebtoken": "^8.2.0",
+    "koa": "^2.5.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-json": "^2.0.2",
+    "koa-jwt": "^3.3.1",
+    "koa-mount": "^3.0.0",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "koa2-cors": "^2.0.5",
+    "mongodb": "^3.0.4",
+    "mongoose": "^5.0.9",
+    "mongoose-paginate": "^5.0.3",
+    "nodemon": "^1.17.1"
+  },
+  "devDependencies": {
+    "swagger-jsdoc": "^3.0.2"
+  }
+}

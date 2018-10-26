@@ -1,0 +1,9 @@
+{
+  "name": "kkfor",
+  "script": "./app.js",
+  "ignore_watch": [
+    "node_modules",
+    "log"
+  ],
+  "error_file": "./log/pm2/error.log"
+}

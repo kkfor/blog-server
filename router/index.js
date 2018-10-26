@@ -1,6 +1,6 @@
 const router = require('koa-router')()
 const user = require('./routes/user')
-const user = require('./routes/article')
+const article = require('./routes/article')
 const classify = require('./routes/classify')
 
 module.exports = app => {

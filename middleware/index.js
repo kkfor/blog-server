@@ -1,7 +1,6 @@
 const bodyParser = require('koa-bodyparser')
 const cors = require('koa2-cors')
 const koaJwt = require('koa-jwt')
-const config = require('../config')
 const send = require('./send')
 const auth = require('./auth')
 const json = require('koa-json')

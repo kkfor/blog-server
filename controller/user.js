@@ -1,6 +1,6 @@
 const UserModel = require('../models/user')
 const jwt = require('jsonwebtoken')
-const secret = require('../config').secret
+const secret = require('../config.db').secret
 
 module.exports = {
   checkUserExisted: async (ctx) => {

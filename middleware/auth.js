@@ -21,7 +21,17 @@ module.exports = () => {
       return
     }
 
-    const isLogin = Object.is(ctx.request.url, '/user/login') && Object.is(ctx.request.method, 'POST')
+    let isLogin = false
+    let url = ['/user/login', '/user/register']
+    if (Object.is(ctx.request.method, 'GET')) {
+      isLogin = true
+    } else {
+      for(let i = 0; i < url.length; i++) {
+        if(Object.is(ctx.request.url, url[i])) {
+          isLogin = true
+        }
+      }
+    }
 
     if (isLogin) {
       await next()

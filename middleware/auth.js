@@ -2,19 +2,6 @@ const authIsVerified = require('../utils/auth')
 
 module.exports = () => {
   return async(ctx, next) => {
-    const allowedOrigins = ['']
-    const origin = ctx.request.headers.origin || ''
-    if (allowedOrigins.includes(origin) || origin.includes('localhost')) {
-      ctx.set('Access-Control-Allow-Origin', origin)
-    }
-  
-    ctx.set({
-      'Access-Control-Allow-Headers': 'Authorization, Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With',
-      'Access-Control-Allow-Methods': 'PUT, POST, GET, DELETE, OPTIONS',
-      'Access-Control-Max-Age': '1728000',
-      'Content-Type': 'application/jsoncharset=utf-8'
-    })
-
     // OPTIONS
     if (ctx.request.method === 'OPTIONS') {
       ctx.status = 200
@@ -22,7 +9,7 @@ module.exports = () => {
     }
 
     let isLogin = false
-    let url = ['/user/login', '/user/register']
+    let url = ['/api/user/login', '/api/user/register']
     if (Object.is(ctx.request.method, 'GET')) {
       isLogin = true
     } else {

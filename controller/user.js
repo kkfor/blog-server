@@ -43,7 +43,7 @@ module.exports = {
       )
       ctx.send({code: 1, message: '登录成功', data: token})
     } else {
-      ctx.send({code: 0, message: '登录失败'})
+      ctx.send({code: 0, message: '用户名或密码错误'})
     }
   }
 }

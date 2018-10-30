@@ -24,9 +24,12 @@ module.exports = () => {
       await next()
       return
     }
+
     if (!authIsVerified(ctx.request) && !Object.is(ctx.request.method, 'GET')) {
-      ctx.send({code: 0, message: 'token验证错误'})
-      return false
+      console.log(authIsVerified(ctx.request))
+      ctx.status = 401
+      ctx.send({code: 0, message: '登录过期，请重新登录'})
+      return
     }
     await next()
   } 

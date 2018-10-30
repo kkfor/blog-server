@@ -10,17 +10,16 @@ const authToke = req => {
 
 const authIsVerified = req => {
   const token = authToke(req)
-  let status
   if (token) {
-    jwt.verify(token, secret, function(err, decoded) {
+    let status = jwt.verify(token, secret, function(err, decoded) {
       if (decoded && decoded.exp > Math.floor(Date.now() / 1000)) {
-        status = true
+        return true
       }
+      return false
     })
-  } else {
-    status = false
+    return status
   }
-  return status
+  return false
 }
 
 module.exports = authIsVerified

@@ -26,7 +26,6 @@ module.exports = () => {
     }
 
     if (!authIsVerified(ctx.request) && !Object.is(ctx.request.method, 'GET')) {
-      console.log(authIsVerified(ctx.request))
       ctx.status = 401
       ctx.send({code: 0, message: '登录过期，请重新登录'})
       return

@@ -1,10 +1,10 @@
-const ClassifyModel = require('../models/classify')
+const CategoryModel = require('../models/category')
 
 module.exports = {
   // 添加分类
-  async addClassify(ctx) {
-    const {title, value} = ctx.request.body
-    await ClassifyModel.create({title, value})
+  async addCategory(ctx) {
+    const { title, value } = ctx.request.body
+    await CategoryModel.create({title, value})
     ctx.send({
       code: 1,
       message: '增加分类成功'
@@ -13,43 +13,42 @@ module.exports = {
 
   // 获取全部分类
   async getClassifies(ctx) {
-    const calssifies = await ClassifyModel.find()
-    const total = await ClassifyModel.find().count()
+    const data = await CategoryModel.find()
 
     ctx.send({
       code: 1,
       message: '获取分类成功',
-      data: calssifies
+      data
     })
   },
 
   // 通过id获取分类
   async getClassifyById(ctx) {
-    let id = ctx.params.id
-    const classify = await ClassifyModel.findById(id)
+    let { id } = ctx.params
+    const data = await CategoryModel.findById(id)
     ctx.send({
       code: 1,
       message: '获取分类成功',
-      data: classify
+      data
     })
   },
 
   // 通过id删除分类
   async delClassifyById(ctx) {
     const { id } = ctx.params
-    const classify = await ClassifyModel.findByIdAndRemove(id)
+    const data = await CategoryModel.findByIdAndRemove(id)
     ctx.send({
       code: 1,
       message: '删除分类成功',
-      data: classify
+      data
     })
   },
 
   // 更新分类
   async patchClassify(ctx) {
-    const id = ctx.params.id
+    const { id } = ctx.params
     const req = ctx.request.body
-    const res = await ClassifyModel.findByIdAndUpdate(id, {
+    const res = await CategoryModel.findByIdAndUpdate(id, {
       ...req
     })
     ctx.send({

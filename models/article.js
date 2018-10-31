@@ -1,12 +1,11 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const mongoosePaginate = require('mongoose-paginate')
 
 const articleSchema = new Schema({
   id: Number,
   title: String,
   content: String,
-  classify: String,
+  category: String,
   publish: {
     type: Boolean,
     default: false
@@ -15,17 +14,16 @@ const articleSchema = new Schema({
     type: Number,
     default: 0
   },
-  createdDate: {
+  createAt: {
     type: Date,
     default: Date.now
   },
-  updateDate: {
+  updateAt: {
     type: Date,
     default: Date.now
   }
 })
 
-articleSchema.plugin(mongoosePaginate)
 articleSchema.index({id: 1})
 
 const Article = mongoose.model('Article', articleSchema)

@@ -1,54 +1,58 @@
 const articleModel = require('../models/article')
+const authIsVerified = require('../utils/auth')
 
 module.exports = {
   // 获取文章列表
-  getArts: async (ctx) => {
+  getArts: async ctx => {
     const {
-      currentPage = 1,
-      pageSize = 10,
-      publish = true
+      page = 1,
+      limit = 10,
+      publish
     } = ctx.query
 
-    const query = {
-      publish
-    }
-    const options = {
-      limit: pageSize,
-      sort: {createdDate: -1},
-      page: currentPage
-    }
+    const query = publish ? {publish} : {}
 
-    const arts = await articleModel.paginate(query, options)
-
+    const arts = await articleModel
+                                .find(query)
+                                .skip(limit * (page - 1))
+                                .limit(limit)
+    const total = await articleModel.countDocuments(query)
+    const pages = Math.ceil(total/limit) || 1
+    const data = {
+      arts,
+      limit,
+      page,
+      pages,
+      total
+    }
     ctx.send({
       code: 1,
       message: '查询文章列表成功',
-      data: arts
+      data
     })
   },
 
   // 获取文章详情
-  getArt: async (ctx, next) => {
-    let { id} = ctx.params
+  getArt: async ctx => {
+    let { id } = ctx.params
     const data = await articleModel.findById(id)
-    if(data.publish) {
-      await articleModel.findByIdAndUpdate(id, {views: data.views + 1})
-      ctx.send({code: 1, message: '查询文章成功', data})
-    } else {
-      ctx.send({code: 0, message: '查询文章失败，没有权限'})
-    }
+    ctx.send({
+      code: 1,
+      message: '查询文章成功',
+      data
+    })
   },
 
   // 添加文章
-  postArt: async (ctx, next) => {
-    const {title, content, classify, publish} = ctx.request.body
+  postArt: async (ctx) => {
+    const {title, content, category, publish} = ctx.request.body
     const result = await articleModel.create({
       title,
       content,
-      classify,
+      category,
       publish
     })
-    if (result !== null) {
+    if (!result) {
       ctx.send({code: 1, message: '添加文章成功', data: result})
     } else {
       ctx.send({code: 0, message: '添加文章失败'})
@@ -63,7 +67,7 @@ module.exports = {
   },
 
   // 修改文章
-  patchArt: async (ctx) => {
+  putArt: async (ctx) => {
     const { id } = ctx.params
     const req = ctx.request.body
     console.log(req)

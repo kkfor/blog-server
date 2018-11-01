@@ -23,7 +23,7 @@ module.exports = {
   },
 
   // 通过id获取分类
-  async getClassifyById(ctx) {
+  async getCategoryById(ctx) {
     let { id } = ctx.params
     const data = await CategoryModel.findById(id)
     ctx.send({
@@ -34,7 +34,7 @@ module.exports = {
   },
 
   // 通过id删除分类
-  async delClassifyById(ctx) {
+  async delCategoryById(ctx) {
     const { id } = ctx.params
     const data = await CategoryModel.findByIdAndRemove(id)
     ctx.send({
@@ -45,7 +45,7 @@ module.exports = {
   },
 
   // 更新分类
-  async patchClassify(ctx) {
+  async patchCategory(ctx) {
     const { id } = ctx.params
     const req = ctx.request.body
     const res = await CategoryModel.findByIdAndUpdate(id, {

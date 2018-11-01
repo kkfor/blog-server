@@ -46,14 +46,14 @@ module.exports = {
   // 添加文章
   postArt: async (ctx) => {
     const {title, content, category, publish} = ctx.request.body
-    const result = await articleModel.create({
+    const data = await articleModel.create({
       title,
       content,
       category,
       publish
     })
-    if (!result) {
-      ctx.send({code: 1, message: '添加文章成功', data: result})
+    if (!!data) {
+      ctx.send({code: 1, message: '添加文章成功', data})
     } else {
       ctx.send({code: 0, message: '添加文章失败'})
     }
@@ -67,11 +67,12 @@ module.exports = {
   },
 
   // 修改文章
-  putArt: async (ctx) => {
+  putArt: async ctx => {
     const { id } = ctx.params
     const req = ctx.request.body
-    console.log(req)
-    const result = await articleModel.findByIdAndUpdate(id, {
+    const updateAt = Date.now()
+    await articleModel.findByIdAndUpdate(id, {
+      updateAt,
       ...req
     })
     ctx.send({code: 1, message: '更新文章成功'})

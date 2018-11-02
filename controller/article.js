@@ -45,7 +45,7 @@ module.exports = {
 
   // 添加文章
   postArt: async (ctx) => {
-    const {title, content, category, publish} = ctx.request.body
+    const { title, content, category, publish } = ctx.request.body
     const data = await articleModel.create({
       title,
       content,

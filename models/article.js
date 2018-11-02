@@ -6,7 +6,7 @@ const articleSchema = new Schema({
   title: String,
   content: String,
   category: {
-    type: Schema.Types.ObjectId,
+    type: [Schema.Types.ObjectId],
     ref: 'Category'
   },
   publish: {

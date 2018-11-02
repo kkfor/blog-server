@@ -5,9 +5,6 @@ const categorySchema = new Schema({
   id: Number,
   label: {
     type: String
-  },
-  value: {
-    type: String
   }
 })
 

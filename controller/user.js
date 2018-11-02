@@ -26,7 +26,7 @@ module.exports = {
     }
   },
 
-  login: async (ctx, next) => {
+  login: async (ctx) => {
     const {username, password} = ctx.request.body
     const user = await UserModel.findOne({username, password})
     if (!!user) {

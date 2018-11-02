@@ -2,9 +2,9 @@ const CategoryModel = require('../models/category')
 
 module.exports = {
   // 添加分类
-  async addCategory(ctx) {
-    const { title, value } = ctx.request.body
-    await CategoryModel.create({title, value})
+  async postCategory(ctx) {
+    const { name, value } = ctx.request.body
+    await CategoryModel.create({name, value})
     ctx.send({
       code: 1,
       message: '增加分类成功'
@@ -12,7 +12,7 @@ module.exports = {
   },
 
   // 获取全部分类
-  async getClassifies(ctx) {
+  async getCategories(ctx) {
     const data = await CategoryModel.find()
 
     ctx.send({
@@ -45,10 +45,10 @@ module.exports = {
   },
 
   // 更新分类
-  async patchCategory(ctx) {
+  async putCategory(ctx) {
     const { id } = ctx.params
     const req = ctx.request.body
-    const res = await CategoryModel.findByIdAndUpdate(id, {
+    await CategoryModel.findByIdAndUpdate(id, {
       ...req
     })
     ctx.send({

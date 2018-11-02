@@ -1,11 +1,11 @@
 const CategoryController = require('../../controller/category')
 
 module.exports = router => {
-  router.get('/category', CategoryController.getClassifies)
+  router.get('/category', CategoryController.getCategories)
   router.get('/category/:id', CategoryController.getCategoryById)
   
-  router.patch('/category/:id', CategoryController.patchCategory)
+  router.put('/category/:id', CategoryController.putCategory)
   router.delete('/category/:id', CategoryController.delCategoryById)
 
-  router.post('/category/add', CategoryController.addCategory)
+  router.post('/category', CategoryController.postCategory)
 }

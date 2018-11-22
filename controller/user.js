@@ -1,4 +1,4 @@
-const UserModel = require('../models/user')
+const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 const secret = require('../config.db').secret
 
@@ -10,11 +10,11 @@ module.exports = {
   register: async (ctx, next) => {
     const {username, password} = ctx.request.body
 
-    const userExisted = await UserModel.findOne({username})
+    const userExisted = await User.findOne({username})
     if (!!userExisted) {
       ctx.send({code: 0, message: '用户已存在'})
     } else {
-      const result = await UserModel.create({
+      const result = await User.create({
         username,
         password
       })
@@ -28,7 +28,7 @@ module.exports = {
 
   login: async (ctx) => {
     const {username, password} = ctx.request.body
-    const user = await UserModel.findOne({username, password})
+    const user = await User.findOne({username, password})
     if (!!user) {
       // 生成token
       const token = jwt.sign(

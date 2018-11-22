@@ -3,9 +3,8 @@ const Schema = mongoose.Schema
 
 const categorySchema = new Schema({
   id: Number,
-  label: {
-    type: String
-  }
+  slug: String,
+  url: String
 })
 
 const Category = mongoose.model('Category', categorySchema)

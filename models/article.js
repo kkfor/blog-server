@@ -5,10 +5,10 @@ const articleSchema = new Schema({
   id: Number,
   title: String,
   content: String,
-  category: {
-    type: [Schema.Types.ObjectId],
+  category: [{
+    type: Schema.Types.ObjectId,
     ref: 'Category'
-  },
+  }],
   publish: {
     type: Boolean,
     default: false
@@ -17,11 +17,11 @@ const articleSchema = new Schema({
     type: Number,
     default: 0
   },
-  createAt: {
+  createdAt: {
     type: Date,
     default: Date.now
   },
-  updateAt: {
+  updatedAt: {
     type: Date,
     default: Date.now
   }

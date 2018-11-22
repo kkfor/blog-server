@@ -1,10 +1,10 @@
-const CategoryModel = require('../models/category')
+const Category = require('../models/category')
 
 module.exports = {
   // 添加分类
   async postCategory(ctx) {
     const { label } = ctx.request.body
-    await CategoryModel.create({label})
+    await Category.create({label})
     ctx.send({
       code: 1,
       message: '增加分类成功'
@@ -13,7 +13,7 @@ module.exports = {
 
   // 获取全部分类
   async getCategories(ctx) {
-    const data = await CategoryModel.find()
+    const data = await Category.find()
 
     ctx.send({
       code: 1,
@@ -25,7 +25,7 @@ module.exports = {
   // 通过id获取分类
   async getCategoryById(ctx) {
     let { id } = ctx.params
-    const data = await CategoryModel.findById(id)
+    const data = await Category.findById(id)
     ctx.send({
       code: 1,
       message: '获取分类成功',
@@ -36,7 +36,7 @@ module.exports = {
   // 通过id删除分类
   async delCategoryById(ctx) {
     const { id } = ctx.params
-    const data = await CategoryModel.findByIdAndRemove(id)
+    const data = await Category.findByIdAndRemove(id)
     ctx.send({
       code: 1,
       message: '删除分类成功',
@@ -48,7 +48,7 @@ module.exports = {
   async putCategory(ctx) {
     const { id } = ctx.params
     const req = ctx.request.body
-    await CategoryModel.findByIdAndUpdate(id, {
+    await Category.findByIdAndUpdate(id, {
       ...req
     })
     ctx.send({

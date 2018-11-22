@@ -3,8 +3,8 @@ const Category = require('../models/category')
 module.exports = {
   // 添加分类
   async postCategory(ctx) {
-    const { label } = ctx.request.body
-    await Category.create({label})
+    const { slug } = ctx.request.body
+    await Category.create({ slug })
     ctx.send({
       code: 1,
       message: '增加分类成功'

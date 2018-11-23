@@ -12,6 +12,9 @@ module.exports = {
       category
     } = ctx.query
 
+    const options = {
+      id: -1
+    }
     const query = {}
 
     if (publish) {
@@ -26,6 +29,7 @@ module.exports = {
 
     const arts = await Article
       .find(query)
+      .sort(options)
       .skip(limit * (page - 1))
       .limit(limit)
     const total = await Article.countDocuments(query)

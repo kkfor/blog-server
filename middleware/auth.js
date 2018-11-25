@@ -9,7 +9,11 @@ module.exports = () => {
     }
 
     let isLogin = false
-    let url = ['/api/user/login', '/api/user/register']
+    let url = [
+      '/api/user/login',
+      '/api/user/register',
+      '/api/comment'
+    ]
     if (Object.is(ctx.request.method, 'GET')) {
       isLogin = true
     } else {

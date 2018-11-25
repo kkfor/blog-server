@@ -3,32 +3,28 @@ const jwt = require('jsonwebtoken')
 const secret = require('../config.db').secret
 
 module.exports = {
-  checkUserExisted: async (ctx) => {
-    const { username } = ctx.request.body
-
-  },
   register: async (ctx, next) => {
-    const {username, password} = ctx.request.body
+    const { username, password } = ctx.request.body
 
-    const userExisted = await User.findOne({username})
+    const userExisted = await User.findOne({ username })
     if (!!userExisted) {
-      ctx.send({code: 0, message: '用户已存在'})
+      ctx.send({ code: 0, message: '用户已存在' })
     } else {
       const result = await User.create({
         username,
         password
       })
       if (result !== null) {
-        ctx.send({code: 1, message: '注册成功', data: result})
+        ctx.send({ code: 1, message: '注册成功', data: result })
       } else {
-        ctx.send({code: 0, message: '注册失败'})
+        ctx.send({ code: 0, message: '注册失败' })
       }
     }
   },
 
   login: async (ctx) => {
-    const {username, password} = ctx.request.body
-    const user = await User.findOne({username, password})
+    const { username, password } = ctx.request.body
+    const user = await User.findOne({ username, password })
     if (!!user) {
       // 生成token
       const token = jwt.sign(
@@ -41,9 +37,9 @@ module.exports = {
           expiresIn: '4h'
         }
       )
-      ctx.send({code: 1, message: '登录成功', data: token})
+      ctx.send({ code: 1, message: '登录成功', data: token })
     } else {
-      ctx.send({code: 0, message: '用户名或密码错误'})
+      ctx.send({ code: 0, message: '用户名或密码错误' })
     }
   }
 }

@@ -4,12 +4,13 @@ const authIsVerified = require('../utils/auth')
 
 module.exports = {
   // 获取文章列表
-  getArts: async ctx => {
+  async getArts(ctx) {
     const {
       page = 1,
       limit = 10,
       publish,
-      category
+      category,
+      hot
     } = ctx.query
 
     const options = {
@@ -22,8 +23,12 @@ module.exports = {
     }
 
     if (category) {
-      const c = await Category.findOne({slug: category})
+      const c = await Category.findOne({ slug: category })
       query.category = c._id
+    }
+
+    if (hot) {
+      options.views = -1
     }
 
 
@@ -49,7 +54,7 @@ module.exports = {
   },
 
   // 获取文章详情
-  getArt: async ctx => {
+  async getArt(ctx) {
     let { id } = ctx.params
     const data = await Article.findById(id)
     ctx.send({
@@ -60,7 +65,7 @@ module.exports = {
   },
 
   // 添加文章
-  postArt: async (ctx) => {
+  async postArt(ctx) {
     const { title, content, category, publish } = ctx.request.body
     const data = await Article.create({
       title,
@@ -76,19 +81,19 @@ module.exports = {
   },
 
   // 删除文章
-  deleteArt: async (ctx) => {
+  async deleteArt(ctx) {
     const { id } = ctx.params
-    const article = await Article.findByIdAndRemove(id)
+    await Article.findByIdAndRemove(id)
     ctx.send({ code: 1, message: '删除文章成功' })
   },
 
   // 修改文章
-  putArt: async ctx => {
+  async putArt(ctx) {
     const { id } = ctx.params
     const req = ctx.request.body
-    const updateAt = Date.now()
+    const updatedAt = Date.now()
     await Article.findByIdAndUpdate(id, {
-      updateAt,
+      updatedAt,
       ...req
     })
     ctx.send({ code: 1, message: '更新文章成功' })

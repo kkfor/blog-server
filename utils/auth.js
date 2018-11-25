@@ -11,7 +11,7 @@ const authToke = req => {
 const authIsVerified = req => {
   const token = authToke(req)
   if (token) {
-    let status = jwt.verify(token, secret, function(err, decoded) {
+    let status = jwt.verify(token, secret, function (err, decoded) {
       if (decoded && decoded.exp > Math.floor(Date.now() / 1000)) {
         return true
       }

@@ -37,10 +37,10 @@ module.exports = {
       || ''
     ).replace('::ffff:', '')
 
-    const { article, name, email, site, content, ua } = ctx.request.body
+    const { articleId, name, email, site, content, ua } = ctx.request.body
 
     const data = await Comment.create({
-      article,
+      articleId,
       name,
       email,
       site,

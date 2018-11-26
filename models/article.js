@@ -12,7 +12,13 @@ const articleSchema = new Schema({
   // 创建时间
   createdAt: { type: Date, default: Date.now },
   // 更新时间
-  updatedAt: { type: Date, default: Date.now }
+  updatedAt: { type: Date, default: Date.now },
+  // 其他信息
+  meta: {
+    views: { type: Number, default: 0 },
+    likes: { type: Number, default: 0 },
+    comments: { type: Number, default: 0 }
+  }
 })
 
 const Article = mongoose.model('Article', articleSchema)

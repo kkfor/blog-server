@@ -55,8 +55,15 @@ module.exports = {
 
   // 获取文章详情
   async getArt(ctx) {
-    let { id } = ctx.params
+    const req = ctx.request
+    const { id } = ctx.params
     const data = await Article.findById(id)
+    const auth = authIsVerified(req)
+    if (!auth) {
+      data.meta.views++
+      data.save()
+    }
+    // Article.putArt({meta{}})
     ctx.send({
       code: 1,
       message: '查询文章成功',

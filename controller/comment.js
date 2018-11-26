@@ -3,9 +3,9 @@ const Comment = require('../models/comment')
 module.exports = {
   // 获取评论
   async getComments(ctx) {
-    const { article } = ctx.query
+    const { articleId } = ctx.query
 
-    if(!article) {
+    if (!articleId) {
       ctx.send({
         code: 0,
         message: '缺少文章id'
@@ -13,7 +13,7 @@ module.exports = {
       return
     }
     const query = {
-      article
+      articleId
     }
 
     const data = await Comment.find(query)
@@ -28,14 +28,14 @@ module.exports = {
   async postComment(ctx) {
     const req = ctx.request
     const ip = (req.headers['x-forwarded-for']
-        || req.headers['x-real-ip']
-        || (req.connection && req.connection.remoteAddress)
-        || req.socket.remoteAddress
-        || (req.connection && req.connection.socket.remoteAddress)
-        || req.ip
-        || req.ips[0]
-        || ''
-      ).replace('::ffff:', '')
+      || req.headers['x-real-ip']
+      || (req.connection && req.connection.remoteAddress)
+      || req.socket.remoteAddress
+      || (req.connection && req.connection.socket.remoteAddress)
+      || req.ip
+      || req.ips[0]
+      || ''
+    ).replace('::ffff:', '')
 
     const { article, name, email, site, content, ua } = ctx.request.body
 

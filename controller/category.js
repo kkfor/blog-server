@@ -2,7 +2,7 @@ const Category = require('../models/category')
 
 module.exports = {
   // 添加分类
-  async postCategory(ctx) {
+  async postItem(ctx) {
     const { slug } = ctx.request.body
     await Category.create({ slug })
     ctx.send({
@@ -12,7 +12,7 @@ module.exports = {
   },
 
   // 获取全部分类
-  async getCategories(ctx) {
+  async getList(ctx) {
     const data = await Category.find()
 
     ctx.send({
@@ -23,7 +23,7 @@ module.exports = {
   },
 
   // 通过id获取分类
-  async getCategoryById(ctx) {
+  async getItem(ctx) {
     let { id } = ctx.params
     const data = await Category.findById(id)
     ctx.send({
@@ -34,7 +34,7 @@ module.exports = {
   },
 
   // 通过id删除分类
-  async delCategoryById(ctx) {
+  async delItem(ctx) {
     const { id } = ctx.params
     const data = await Category.findByIdAndRemove(id)
     ctx.send({
@@ -45,7 +45,7 @@ module.exports = {
   },
 
   // 更新分类
-  async putCategory(ctx) {
+  async putItem(ctx) {
     const { id } = ctx.params
     const req = ctx.request.body
     await Category.findByIdAndUpdate(id, {

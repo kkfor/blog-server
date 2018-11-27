@@ -1,22 +1,46 @@
 const Comment = require('../models/comment')
+const authIsVerified = require('../utils/auth')
 
 module.exports = {
   // 获取评论
-  async getComments(ctx) {
-    const { articleId } = ctx.query
+  async getList(ctx) {
+    const req = ctx.request
+    const { articleId, limit = 30, page = 1 } = ctx.query
 
-    if (!articleId) {
+    const auth = authIsVerified(req)
+    // 无权限访问没有articleId
+    if (!auth && !articleId) {
       ctx.send({
         code: 0,
         message: '缺少文章id'
       })
       return
     }
-    const query = {
-      articleId
+    const query = {}
+    const options = {
+      id: -1
     }
 
-    const data = await Comment.find(query)
+    // 前台访问
+    if (articleId) {
+      query.articleId = articleId
+    }
+
+    const list = await Comment
+      .find(query)
+      .sort(options)
+      .skip(limit * (page - 1))
+      .limit(limit)
+    const total = await Comment.countDocuments(query)
+    const pages = Math.ceil(total / limit) || 1
+
+    const data = {
+      list,
+      limit,
+      page,
+      pages,
+      total
+    }
     ctx.send({
       code: 1,
       message: '获取评论列表成功',
@@ -25,7 +49,7 @@ module.exports = {
   },
 
   // 新增评论
-  async postComment(ctx) {
+  async postItem(ctx) {
     const req = ctx.request
     const ip = (req.headers['x-forwarded-for']
       || req.headers['x-real-ip']
@@ -37,14 +61,8 @@ module.exports = {
       || ''
     ).replace('::ffff:', '')
 
-    const { articleId, name, email, site, content, ua } = ctx.request.body
-
     const data = await Comment.create({
-      articleId,
-      name,
-      email,
-      site,
-      content,
+      ...ctx.request.body
       // ua,
       // ip
     })
@@ -54,6 +72,23 @@ module.exports = {
     } else {
       ctx.send({ code: 0, message: '新增评论失败' })
     }
+  },
 
+  // 修改评论状态
+  async putItem(ctx) {
+    const { id } = ctx.params
+    const req = ctx.request.body
+    const data = Comment.findByIdAndUpdate(id, req)
+  },
+
+  // 删除评论
+  async delItem(ctx) {
+    const { id } = ctx.params
+    const data = await Comment.findByIdAndRemove(id)
+    ctx.send({
+      code: 1,
+      message: '删除评论成功',
+      data
+    })
   }
 }

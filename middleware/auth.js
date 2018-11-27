@@ -18,7 +18,7 @@ module.exports = () => {
       isLogin = true
     } else {
       for (let i = 0; i < url.length; i++) {
-        if (Object.is(ctx.request.url, url[i])) {
+        if (Object.is(ctx.request.url, url[i]) && Object.is(ctx.request.method, 'POST')) {
           isLogin = true
         }
       }

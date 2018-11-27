@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 const commentSchema = new Schema({
   // 所属文章
-  articleId: { type: Schema.Types.ObjectId, ref: 'Article', required: true },
+  articleId: { type: Schema.Types.ObjectId, ref: 'Article' },
   // 昵称
   name: { type: String, required: true },
   // 邮箱

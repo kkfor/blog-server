@@ -5,11 +5,11 @@ module.exports = {
   // 获取评论
   async getList(ctx) {
     const req = ctx.request
-    const { articleId, limit = 30, page = 1 } = ctx.query
+    const { article, limit = 30, page = 1 } = ctx.query
 
     const auth = authIsVerified(req)
-    // 无权限访问没有articleId
-    if (!auth && !articleId) {
+    // 无权限访问或没有article
+    if (!auth && !article) {
       ctx.send({
         code: 0,
         message: '缺少文章id'
@@ -22,8 +22,8 @@ module.exports = {
     }
 
     // 前台访问
-    if (articleId) {
-      query.articleId = articleId
+    if (article) {
+      query.article = article
     }
 
     const list = await Comment

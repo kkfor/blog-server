@@ -15,7 +15,7 @@ module.exports = {
         password
       })
       if (result !== null) {
-        ctx.send({ code: 1, message: '注册成功', data: result })
+        ctx.send({ code: 1, message: '注册成功', result: result })
       } else {
         ctx.send({ code: 0, message: '注册失败' })
       }
@@ -37,7 +37,7 @@ module.exports = {
           expiresIn: '4h'
         }
       )
-      ctx.send({ code: 1, message: '登录成功', data: token })
+      ctx.send({ code: 1, message: '登录成功', result: token })
     } else {
       ctx.send({ code: 0, message: '用户名或密码错误' })
     }

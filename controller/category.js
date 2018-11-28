@@ -13,34 +13,34 @@ module.exports = {
 
   // 获取全部分类
   async getList(ctx) {
-    const data = await Category.find()
+    const result = await Category.find()
 
     ctx.send({
       code: 1,
       message: '获取分类成功',
-      data
+      result
     })
   },
 
   // 通过id获取分类
   async getItem(ctx) {
     let { id } = ctx.params
-    const data = await Category.findById(id)
+    const result = await Category.findById(id)
     ctx.send({
       code: 1,
       message: '获取分类成功',
-      data
+      result
     })
   },
 
   // 通过id删除分类
   async delItem(ctx) {
     const { id } = ctx.params
-    const data = await Category.findByIdAndRemove(id)
+    const result = await Category.findByIdAndRemove(id)
     ctx.send({
       code: 1,
       message: '删除分类成功',
-      data
+      result
     })
   },
 

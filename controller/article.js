@@ -32,15 +32,15 @@ module.exports = {
     }
 
 
-    const arts = await Article
+    const data = await Article
       .find(query)
       .sort(options)
       .skip(limit * (page - 1))
       .limit(limit)
     const total = await Article.countDocuments(query)
     const pages = Math.ceil(total / limit) || 1
-    const data = {
-      arts,
+    const result = {
+      data,
       limit,
       page,
       pages,
@@ -49,7 +49,7 @@ module.exports = {
     ctx.send({
       code: 1,
       message: '查询文章列表成功',
-      data
+      result
     })
   },
 
@@ -57,31 +57,31 @@ module.exports = {
   async getArt(ctx) {
     const req = ctx.request
     const { id } = ctx.params
-    const data = await Article.findById(id)
+    const result = await Article.findById(id)
     const auth = authIsVerified(req)
     if (!auth) {
-      data.meta.views++
-      data.save()
+      result.meta.views++
+      result.save()
     }
     // Article.putArt({meta{}})
     ctx.send({
       code: 1,
       message: '查询文章成功',
-      data
+      result
     })
   },
 
   // 添加文章
   async postArt(ctx) {
     const { title, content, category, publish } = ctx.request.body
-    const data = await Article.create({
+    const result = await Article.create({
       title,
       content,
       category,
       publish
     })
-    if (!!data) {
-      ctx.send({ code: 1, message: '添加文章成功', data })
+    if (!!result) {
+      ctx.send({ code: 1, message: '添加文章成功', result })
     } else {
       ctx.send({ code: 0, message: '添加文章失败' })
     }

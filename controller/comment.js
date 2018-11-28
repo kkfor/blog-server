@@ -26,7 +26,7 @@ module.exports = {
       query.article = article
     }
 
-    const list = await Comment
+    const data = await Comment
       .find(query)
       .sort(options)
       .skip(limit * (page - 1))
@@ -34,8 +34,8 @@ module.exports = {
     const total = await Comment.countDocuments(query)
     const pages = Math.ceil(total / limit) || 1
 
-    const data = {
-      list,
+    const result = {
+      data,
       limit,
       page,
       pages,
@@ -44,7 +44,7 @@ module.exports = {
     ctx.send({
       code: 1,
       message: '获取评论列表成功',
-      data
+      result
     })
   },
 
@@ -61,14 +61,14 @@ module.exports = {
       || ''
     ).replace('::ffff:', '')
 
-    const data = await Comment.create({
+    const result = await Comment.create({
       ...ctx.request.body
       // ua,
       // ip
     })
 
-    if (!!data) {
-      ctx.send({ code: 1, message: '新增评论成功', data })
+    if (!!result) {
+      ctx.send({ code: 1, message: '新增评论成功', result })
     } else {
       ctx.send({ code: 0, message: '新增评论失败' })
     }
@@ -78,17 +78,17 @@ module.exports = {
   async putItem(ctx) {
     const { id } = ctx.params
     const req = ctx.request.body
-    const data = Comment.findByIdAndUpdate(id, req)
+    const result = Comment.findByIdAndUpdate(id, req)
   },
 
   // 删除评论
   async delItem(ctx) {
     const { id } = ctx.params
-    const data = await Comment.findByIdAndRemove(id)
+    const result = await Comment.findByIdAndRemove(id)
     ctx.send({
       code: 1,
       message: '删除评论成功',
-      data
+      result
     })
   }
 }

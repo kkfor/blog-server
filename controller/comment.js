@@ -31,6 +31,10 @@ module.exports = {
       .sort(options)
       .skip(limit * (page - 1))
       .limit(limit)
+      .populate({
+        path: 'article',
+        select: 'title _id'
+      })
     const total = await Comment.countDocuments(query)
     const pages = Math.ceil(total / limit) || 1
 

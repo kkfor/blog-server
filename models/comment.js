@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const commentSchema = new Schema({
   // 所属文章
   article: { type: Schema.Types.ObjectId, ref: 'Article' },
-  pid: { type: Number, default: 0 },
+  pid: { type: Schema.Types.ObjectId, ref: 'Comment' },
   // 回复评论id
   user: {
     // 昵称

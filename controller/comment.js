@@ -1,5 +1,6 @@
 const Comment = require('../models/comment')
 const authIsVerified = require('../utils/auth')
+const queryIp = require('../utils/ip')
 
 module.exports = {
   // 获取评论
@@ -65,11 +66,15 @@ module.exports = {
       || ''
     ).replace('::ffff:', '')
 
-    const result = await Comment.create({
-      ...ctx.request.body
-      // ua,
-      // ip
-    })
+    const obj = req.body
+    // const ipInfo = await queryIp()
+    // obj.meta.ip = ip
+    // obj.meta.location = {
+    //   country: ipInfo.country,
+    //   city: ipInfo.city
+    // }
+
+    const result = await Comment.create(obj)
 
     if (!!result) {
       ctx.send({ code: 1, message: '新增评论成功', result })

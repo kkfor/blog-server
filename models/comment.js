@@ -19,7 +19,15 @@ const commentSchema = new Schema({
   // 评论内容
   content: { type: String, required: true },
   // 评论时间
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  meta: {
+    ua: String,
+    ip: String,
+    location: {
+      country: String,
+      city: String
+    }
+  }
 })
 
 const Comment = mongoose.model('Comment', commentSchema)

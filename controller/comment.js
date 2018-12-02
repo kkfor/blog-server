@@ -2,15 +2,45 @@ const Comment = require('../models/comment')
 const Article = require('../models/article')
 const authIsVerified = require('../utils/auth')
 const queryIp = require('../utils/ip')
+const sendMail = require('../utils/email')
+const config = require('../app.config')
 
 // 更新文章评论数量
 const updateArticleCommentCount = async (article) => {
   const res = await Comment.aggregate([
-    { $match: { state: 1, article }}
+    { $match: { state: 1, article } }
   ])
   const re = await Article.findByIdAndUpdate(article, {
     'meta.comments': res.length
   })
+}
+
+// 发送邮件
+const sendMainTo = async (comment) => {
+  const content = comment.content
+  const commentType = isReply => isReply ? '回复' : ''
+  const sendMailText = isReply => `来自 ${comment.user.name} 的留言${commentType(isReply)}：${content}`
+  const sendMailHtml = isReply => `
+      <p>
+      来自 ${comment.user.name} 的留言${commentType(isReply)}：${content}<br/>
+      <a href="${config.app.url}" target="_blank">[ 点击查看 ]</a>
+      </p>
+    `
+  sendMail({
+    to: config.email.admin,
+    subject: `博客有新留言`,
+    text: sendMailText(false),
+    html: sendMailHtml(false)
+  })
+  if (comment.pid) {
+    const res = await Comment.findById(comment.pid)
+    sendMail({
+      to: res.user.email,
+      subject: `你在 ${config.app.name} 有新的留言回复`,
+      text: sendMailText(true),
+      html: sendMailHtml(true)
+    })
+  }
 }
 
 module.exports = {
@@ -88,6 +118,7 @@ module.exports = {
     const result = await Comment.create(obj)
 
     if (!!result) {
+      sendMainTo(result)
       updateArticleCommentCount(result.article)
       ctx.send({ code: 1, message: '新增评论成功', result })
     } else {

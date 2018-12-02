@@ -1,6 +1,17 @@
 const Comment = require('../models/comment')
+const Article = require('../models/article')
 const authIsVerified = require('../utils/auth')
 const queryIp = require('../utils/ip')
+
+// 更新文章评论数量
+const updateArticleCommentCount = async (article) => {
+  const res = await Comment.aggregate([
+    { $match: { state: 1, article }}
+  ])
+  const re = await Article.findByIdAndUpdate(article, {
+    'meta.comments': res.length
+  })
+}
 
 module.exports = {
   // 获取评论
@@ -77,6 +88,7 @@ module.exports = {
     const result = await Comment.create(obj)
 
     if (!!result) {
+      updateArticleCommentCount(result.article)
       ctx.send({ code: 1, message: '新增评论成功', result })
     } else {
       ctx.send({ code: 0, message: '新增评论失败' })
@@ -87,13 +99,15 @@ module.exports = {
   async putItem(ctx) {
     const { id } = ctx.params
     const req = ctx.request.body
-    const result = Comment.findByIdAndUpdate(id, req)
+    const result = await Comment.findByIdAndUpdate(id, req)
+    updateArticleCommentCount(result.article)
   },
 
   // 删除评论
   async delItem(ctx) {
     const { id } = ctx.params
     const result = await Comment.findByIdAndRemove(id)
+    updateArticleCommentCount(result.article)
     ctx.send({
       code: 1,
       message: '删除评论成功',

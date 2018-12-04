@@ -7,6 +7,6 @@ const middleWare = require('./middleware')
 middleWare(app)
 router(app)
 
-app.listen('4000', function () {
-  console.log('listen: 4000')
+app.listen('5000', function () {
+  console.log('listen: 5000')
 })

@@ -1,6 +1,6 @@
 module.exports = () => {
   return async (ctx, next) => {
-    const allowedOrigins = ['http://kkfor.com']
+    const allowedOrigins = ['http://kkfor.com', 'http://admin.kkfor.com']
     const origin = ctx.request.headers.origin || ''
     // if(!origin) return
     if (allowedOrigins.includes(origin) || origin.includes('localhost')) {

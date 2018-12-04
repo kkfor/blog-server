@@ -1,5 +1,5 @@
 {
-  "name": "kstrg",
+  "name": "kkfor",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,8 +8,8 @@
     "dev": "cross-env NODE_ENV=dev nodemon app.js",
     "prod": "cross-env NODE_ENV=prod pm2 start pm2.conf.json --watch"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "kkfor",
+  "license": "MIT",
   "dependencies": {
     "cross-env": "^5.1.4",
     "jsonwebtoken": "^8.2.0",

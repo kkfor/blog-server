@@ -1,7 +1,7 @@
 const request = require('request')
 const config = require('../app.config')
 
-const queryIp = (ip = '113.87.188.238') => {
+const queryIp = (ip) => {
   return new Promise((resolve, reject) => {
     request({
       headers: {'Authorization': `APPCODE ${config.ip}`},

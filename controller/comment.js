@@ -108,12 +108,16 @@ module.exports = {
     ).replace('::ffff:', '')
 
     const obj = req.body
-    // const ipInfo = await queryIp()
-    // obj.meta.ip = ip
-    // obj.meta.location = {
-    //   country: ipInfo.country,
-    //   city: ipInfo.city
-    // }
+    try {
+      const ipInfo = await queryIp()
+      obj.meta.ip = ip
+      obj.meta.location = {
+        country: ipInfo.country,
+        city: ipInfo.city
+      }
+    } catch (err) {
+      console.log(err, ip)
+    }
 
     const result = await Comment.create(obj)
 

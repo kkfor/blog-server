@@ -24,7 +24,7 @@ module.exports = {
     }
 
     if (category) {
-      const c = await Category.findOne({ slug: category })
+      const c = await Category.findOne({ url: category })
       query.category = c._id
     }
 

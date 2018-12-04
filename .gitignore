@@ -2,5 +2,4 @@
 
 .DS_Store
 
-config.db.js
 app.config.js

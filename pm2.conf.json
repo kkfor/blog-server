@@ -1,5 +1,5 @@
 {
-  "name": "kkfor",
+  "name": "blog_server",
   "script": "./app.js",
   "ignore_watch": [
     "node_modules",

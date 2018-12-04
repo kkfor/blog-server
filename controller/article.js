@@ -16,7 +16,8 @@ module.exports = {
     const options = {
       id: -1
     }
-    const query = {}
+    const query = {
+    }
 
     if (publish) {
       query.publish = publish

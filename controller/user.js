@@ -1,6 +1,6 @@
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
-const secret = require('../config.db').secret
+const secret = require('../app.config').secret
 
 module.exports = {
   register: async (ctx, next) => {

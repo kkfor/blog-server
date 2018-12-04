@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
-const config = require('../config.db').db
-// const url = `mongodb://${config.user}:${config.pwd}@${config.host}:${config.port}/${config.name}`
-const url = `mongodb://${config.host}:${config.port}/${config.name}`
+const config = require('../app.config').db
+const url = config.user ?
+  `mongodb://${config.user}:${config.pwd}@${config.host}:${config.port}/${config.name}`:
+  `mongodb://${config.host}:${config.port}/${config.name}`
 const options = {
   useNewUrlParser: true,
   reconnectTries: Number.MAX_VALUE,

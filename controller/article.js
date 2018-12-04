@@ -29,6 +29,7 @@ module.exports = {
     }
 
     if (hot) {
+      options.comments = -1
       options.views = -1
     }
 

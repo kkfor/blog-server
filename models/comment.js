@@ -25,6 +25,7 @@ const commentSchema = new Schema({
     ip: String,
     location: {
       country: String,
+      province: String,
       city: String
     }
   }

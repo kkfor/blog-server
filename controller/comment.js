@@ -109,10 +109,11 @@ module.exports = {
 
     const obj = req.body
     try {
-      const ipInfo = await queryIp()
       obj.meta.ip = ip
+      const ipInfo = await queryIp(ip)
       obj.meta.location = {
         country: ipInfo.country,
+        province: ipInfo.province,
         city: ipInfo.city
       }
     } catch (err) {

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const secret = require('../config.db').secret
+const secret = require('../app.config').secret
 
 const authToke = req => {
   if (req.headers && req.headers.authorization) {

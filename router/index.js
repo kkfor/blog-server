@@ -4,6 +4,7 @@ const article = require('./routes/article')
 const category = require('./routes/category')
 const comment = require('./routes/comment')
 const qiniu = require('./routes/qiniu')
+const image = require('./routes/image')
 
 const router = new Router({
   prefix: '/api'
@@ -15,6 +16,7 @@ module.exports = app => {
   category(router)
   comment(router)
   qiniu(router)
+  image(router)
 
   app.use(router.routes())
     .use(router.allowedMethods())

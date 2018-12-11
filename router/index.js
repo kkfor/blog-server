@@ -17,6 +17,7 @@ module.exports = app => {
   comment(router)
   qiniu(router)
   image(router)
+  tag(router)
 
   app.use(router.routes())
     .use(router.allowedMethods())

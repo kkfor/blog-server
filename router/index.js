@@ -5,6 +5,7 @@ const category = require('./routes/category')
 const comment = require('./routes/comment')
 const qiniu = require('./routes/qiniu')
 const image = require('./routes/image')
+const tag = require('./routes/tag')
 
 const router = new Router({
   prefix: '/api'

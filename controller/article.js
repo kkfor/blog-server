@@ -39,6 +39,7 @@ module.exports = {
       .sort(options)
       .skip(limit * (page - 1))
       .limit(limit)
+      .populate('category', 'slug')
     const total = await Article.countDocuments(query)
     const pages = Math.ceil(total / limit) || 1
     const result = {

@@ -4,7 +4,7 @@ const secret = require('../app.config').secret
 
 module.exports = {
   register: async (ctx, next) => {
-    const { username, password } = ctx.request.body
+    const { username, password, email } = ctx.request.body
 
     const userExisted = await User.findOne({ username })
     if (!!userExisted) {
@@ -12,13 +12,10 @@ module.exports = {
     } else {
       const result = await User.create({
         username,
-        password
+        password,
+        email
       })
-      if (result !== null) {
-        ctx.send({ code: 1, message: '注册成功', result: result })
-      } else {
-        ctx.send({ code: 0, message: '注册失败' })
-      }
+      ctx.send({ code: 1, message: '注册成功', result: result })
     }
   },
 

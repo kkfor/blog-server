@@ -4,7 +4,7 @@ const authIsVerified = require('../utils/auth')
 
 module.exports = {
   // 获取文章列表
-  async getArts(ctx) {
+  async getList(ctx) {
     const {
       page = 1,
       limit = 10,
@@ -56,7 +56,7 @@ module.exports = {
   },
 
   // 获取文章详情
-  async getArt(ctx) {
+  async getItem(ctx) {
     const req = ctx.request
     const { id } = ctx.params
     const result = await Article.findById(id)
@@ -65,7 +65,6 @@ module.exports = {
       result.meta.views++
       result.save()
     }
-    // Article.putArt({meta{}})
     ctx.send({
       code: 1,
       message: '查询文章成功',

@@ -23,7 +23,7 @@ const sendMainTo = async (comment) => {
   const sendMailHtml = isReply => `
       <p>
       来自 ${comment.user.name} 的留言${commentType(isReply)}：${content}<br/>
-      <a href="${config.app.url}" target="_blank">[ 点击查看 ]</a>
+      <a href="${config.app.url}/article/${comment.article}" target="_blank">[ 点击查看 ]</a>
       </p>
     `
   sendMail({
@@ -67,7 +67,6 @@ module.exports = {
     if (article) {
       query.article = article
     }
-
     const data = await Comment
       .find(query)
       .sort(options)

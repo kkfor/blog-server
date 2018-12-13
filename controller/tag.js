@@ -3,8 +3,8 @@ const Tag = require('../models/tag')
 module.exports = {
   // 添加标签
   async postItem(ctx) {
-    const { slug, url } = ctx.request.body
-    await Tag.create({ slug, url })
+    const { name, slug, url } = ctx.request.body
+    await Tag.create({ slug, url, name })
     ctx.send({
       code: 1,
       message: '增加标签成功'

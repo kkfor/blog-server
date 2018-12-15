@@ -10,7 +10,7 @@ const updateArticleCommentCount = async (article) => {
   const res = await Comment.aggregate([
     { $match: { state: 1, article } }
   ])
-  const re = await Article.findByIdAndUpdate(article, {
+  await Article.findByIdAndUpdate(article, {
     'meta.comments': res.length
   })
 }

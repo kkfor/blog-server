@@ -34,7 +34,7 @@ module.exports = {
     if (tag) {
       const slug = tag
       const c = await Tag.findOne({ slug })
-      query.category = c._id
+      query.tag = c._id
     }
 
     if (hot) {

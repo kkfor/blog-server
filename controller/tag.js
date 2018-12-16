@@ -19,7 +19,7 @@ module.exports = {
     const $match = isAdmin
       ? {}
       : { publish: true }
-    const tags = await Tag.find()
+    const tags = JSON.parse(JSON.stringify(await Tag.find()))
     const counts = await Article.aggregate([
       { $match },
       { $unwind: '$tag' },

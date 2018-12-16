@@ -1,5 +1,6 @@
 const Article = require('../models/article')
 const Category = require('../models/category')
+const Tag = require('../models/tag')
 const authIsVerified = require('../utils/auth')
 
 module.exports = {
@@ -10,6 +11,7 @@ module.exports = {
       limit = 10,
       publish,
       category,
+      tag,
       hot
     } = ctx.query
 
@@ -24,8 +26,14 @@ module.exports = {
     }
 
     if (category) {
-      const url = 'category/' + category
-      const c = await Category.findOne({ url })
+      const slug = category
+      const c = await Category.findOne({ slug })
+      query.category = c._id
+    }
+
+    if (tag) {
+      const slug = tag
+      const c = await Tag.findOne({ slug })
       query.category = c._id
     }
 

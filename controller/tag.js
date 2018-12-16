@@ -1,4 +1,6 @@
 const Tag = require('../models/tag')
+const Article = require('../models/article')
+const auth = require('../utils/auth')
 
 module.exports = {
   // 添加标签
@@ -13,7 +15,24 @@ module.exports = {
 
   // 获取全部标签
   async getList(ctx) {
-    const result = await Tag.find()
+    const isAdmin = auth(ctx.request)
+    const $match = isAdmin
+      ? {}
+      : { publish: true }
+    const tags = await Tag.find()
+    const counts = await Article.aggregate([
+      { $match },
+      { $unwind: '$tag' },
+      { $group: {
+        _id: '$tag',
+        num_tutorial: { $sum: 1 }
+      } }
+    ])
+    const result = tags.map(tag => {
+      const finded = counts.find(c => String(c._id) === String(tag._id))
+      tag.count = finded ? finded.num_tutorial : 0
+      return tag
+    })
 
     ctx.send({
       code: 1,

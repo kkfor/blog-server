@@ -6,10 +6,11 @@ module.exports = {
   // 添加标签
   async postItem(ctx) {
     const { name, slug, url } = ctx.request.body
-    await Tag.create({ slug, url, name })
+    const result = await Tag.create({ slug, url, name })
     ctx.send({
       code: 1,
-      message: '增加标签成功'
+      message: '增加标签成功',
+      result
     })
   },
 

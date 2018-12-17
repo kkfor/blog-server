@@ -12,7 +12,8 @@ module.exports = {
       publish,
       category,
       tag,
-      hot
+      hot,
+      keyword
     } = ctx.query
 
     const options = {
@@ -40,6 +41,15 @@ module.exports = {
     if (hot) {
       options.comments = -1
       options.views = -1
+    }
+
+    // 关键词查询
+    if (keyword) {
+      const keywordReg = new RegExp(keyword)
+      query.$or = [
+        { 'title': keywordReg },
+        { 'content': keywordReg }
+      ]
     }
 
 

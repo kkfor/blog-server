@@ -5,7 +5,6 @@ const client = qiniu.create(config.qiniu)
 
 module.exports = {
   getToken(ctx) {
-
     ctx.send({
       code: 1,
       result: client.uploadToken(),

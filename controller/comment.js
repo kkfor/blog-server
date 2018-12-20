@@ -6,24 +6,25 @@ const sendMail = require('../utils/email')
 const config = require('../app.config')
 
 // 更新文章评论数量
-const updateArticleCommentCount = async (article) => {
-  const res = await Comment.aggregate([
-    { $match: { state: 1, article } }
-  ])
+const updateArticleCommentCount = async article => {
+  const res = await Comment.aggregate([{ $match: { state: 1, article } }])
   await Article.findByIdAndUpdate(article, {
     'meta.comments': res.length
   })
 }
 
 // 发送邮件
-const sendMainTo = async (comment) => {
+const sendMainTo = async comment => {
   const content = comment.content
-  const commentType = isReply => isReply ? '回复' : ''
-  const sendMailText = isReply => `来自 ${comment.user.name} 的留言${commentType(isReply)}：${content}`
+  const commentType = isReply => (isReply ? '回复' : '')
+  const sendMailText = isReply =>
+    `来自 ${comment.user.name} 的留言${commentType(isReply)}：${content}`
   const sendMailHtml = isReply => `
       <p>
       来自 ${comment.user.name} 的留言${commentType(isReply)}：${content}<br/>
-      <a href="${config.app.url}/article/${comment.article}" target="_blank">[ 点击查看 ]</a>
+      <a href="${config.app.url}/article/${
+    comment.article
+  }" target="_blank">[ 点击查看 ]</a>
       </p>
     `
   sendMail({
@@ -67,8 +68,7 @@ module.exports = {
     if (article) {
       query.article = article
     }
-    const data = await Comment
-      .find(query)
+    const data = await Comment.find(query)
       .sort(options)
       .skip(limit * (page - 1))
       .limit(limit)
@@ -96,14 +96,15 @@ module.exports = {
   // 新增评论
   async postItem(ctx) {
     const req = ctx.request
-    const ip = (req.headers['x-forwarded-for']
-      || req.headers['x-real-ip']
-      || (req.connection && req.connection.remoteAddress)
-      || req.socket.remoteAddress
-      || (req.connection && req.connection.socket.remoteAddress)
-      || req.ip
-      || req.ips[0]
-      || ''
+    const ip = (
+      req.headers['x-forwarded-for'] ||
+      req.headers['x-real-ip'] ||
+      (req.connection && req.connection.remoteAddress) ||
+      req.socket.remoteAddress ||
+      (req.connection && req.connection.socket.remoteAddress) ||
+      req.ip ||
+      req.ips[0] ||
+      ''
     ).replace('::ffff:', '')
 
     const obj = req.body

@@ -17,17 +17,17 @@ module.exports = {
   // 获取全部标签
   async getList(ctx) {
     const isAdmin = auth(ctx.request)
-    const $match = isAdmin
-      ? {}
-      : { publish: true }
+    const $match = isAdmin ? {} : { publish: true }
     const tags = JSON.parse(JSON.stringify(await Tag.find()))
     const counts = await Article.aggregate([
       { $match },
       { $unwind: '$tag' },
-      { $group: {
-        _id: '$tag',
-        num_tutorial: { $sum: 1 }
-      } }
+      {
+        $group: {
+          _id: '$tag',
+          num_tutorial: { $sum: 1 }
+        }
+      }
     ])
     const result = tags.map(tag => {
       const finded = counts.find(c => String(c._id) === String(tag._id))

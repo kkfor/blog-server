@@ -25,14 +25,14 @@ const dbConfig = {
     host: 'localhost',
     port: 27017,
     user: '',
-    pwd: '',
+    pwd: ''
   },
   production: {
     name: '',
     host: '',
     port: 27017,
     user: '',
-    pwd: '',
+    pwd: ''
   }
 }
 

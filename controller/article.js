@@ -19,8 +19,7 @@ module.exports = {
     const options = {
       id: -1
     }
-    const query = {
-    }
+    const query = {}
 
     if (publish) {
       query.publish = publish
@@ -46,15 +45,10 @@ module.exports = {
     // 关键词查询
     if (keyword) {
       const keywordReg = new RegExp(keyword)
-      query.$or = [
-        { 'title': keywordReg },
-        { 'content': keywordReg }
-      ]
+      query.$or = [{ title: keywordReg }, { content: keywordReg }]
     }
 
-
-    const data = await Article
-      .find(query)
+    const data = await Article.find(query)
       .sort(options)
       .skip(limit * (page - 1))
       .limit(limit)

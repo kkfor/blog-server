@@ -20,6 +20,5 @@ module.exports = app => {
   image(router)
   tag(router)
 
-  app.use(router.routes())
-    .use(router.allowedMethods())
+  app.use(router.routes()).use(router.allowedMethods())
 }

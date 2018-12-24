@@ -16,9 +16,7 @@ module.exports = {
       keyword
     } = ctx.query
 
-    const options = {
-      id: -1
-    }
+    const options = {}
     const query = {}
 
     if (publish) {
@@ -38,8 +36,10 @@ module.exports = {
     }
 
     if (hot) {
-      options.comments = -1
-      options.views = -1
+      // options['meta.comments'] = -1
+      options['meta.views'] = -1
+    } else {
+      options.createdAt = -1
     }
 
     // 关键词查询

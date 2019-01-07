@@ -6,6 +6,7 @@ const comment = require('./routes/comment')
 const qiniu = require('./routes/qiniu')
 const image = require('./routes/image')
 const tag = require('./routes/tag')
+const zhuanlan = require('./routes/zhuanlan')
 
 const router = new Router({
   prefix: '/api'
@@ -19,6 +20,7 @@ module.exports = app => {
   qiniu(router)
   image(router)
   tag(router)
+  zhuanlan(router)
 
   app.use(router.routes()).use(router.allowedMethods())
 }

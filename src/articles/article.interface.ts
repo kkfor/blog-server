@@ -1,7 +1,7 @@
 import { Document } from 'mongoose'
 
-export interface User extends Document {
+export interface Article extends Document {
   readonly name: string;
   readonly password: string;
-  readonly createdAt: Date;
+  readonly createAt: Date;
 }

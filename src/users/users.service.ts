@@ -13,7 +13,7 @@ export class UsersService {
     return await createdUser.save()
   }
 
-  async findOne(user: CreateUserDto): Promise<User> {
-    return await this.userModel.findOne(user.username)
+  async findOne(username: string): Promise<User> {
+    return await this.userModel.findOne(username)
   }
 }

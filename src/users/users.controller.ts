@@ -1,23 +1,23 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common'
 import { UsersService } from './users.service'
 import { CreateUserDto } from './dto/create-user.dto'
-import { AuthGuard } from '@nestjs/passport'
 
 @Controller('users')
 export class UsersController {
   constructor(
-    private readonly usersService: UsersService,
-    ) {}
+    private readonly usersService: UsersService
+  ) {}
 
-    @Post()
-    async create(@Body() req: CreateUserDto) {
-      await this.usersService.create(req)
-    }
-    
-  @UseGuards(AuthGuard('local'))
+  @Post()
+  async create(@Body() req: CreateUserDto) {
+    await this.usersService.create(req)
+  }
+
   @Post('/login')
-  async login(@Body() req: CreateUserDto) {
-    return req.username
-    // return this.authService.login(req.user)
+  async getToken(
+    @Body('name') name: string,
+    @Body('password') password: string
+  ) {
+    await this.usersService.createToken(name, password)
   }
 }

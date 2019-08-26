@@ -1,24 +1,27 @@
-import { Module } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
-import { UsersModule } from '../users/users.module';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
-import { JwtStrategy } from './jwt.strategy';
+import { Module } from '@nestjs/common'
+import { JwtModule } from '@nestjs/jwt'
+import { AuthService } from './auth.service'
+import { AuthController } from './auth.controller'
+import { JwtStrategy } from './jwt.strategy'
+import { LocalStrategy } from './local.strategy'
 import { jwtConfig } from './jwt.config'
+import { UsersModule } from '../users/users.module'
 
 @Module({
-    imports: [
-        // 建立jsonwebtoken时的相关信息
-        JwtModule.register({
-            secret: jwtConfig.secret,
-            // signOption可以在JwtModule设定
-            // 或是在createToken时候设定
-            signOptions: {
-                expiresIn: 3600 * 60
-            },
-        }),
-        UsersModule],
-    providers: [AuthService, JwtStrategy],
-    controllers: [AuthController],
+  imports: [
+    UsersModule,
+    // 建立jsonwebtoken时的相关信息
+    JwtModule.register({
+      secret: jwtConfig.secret,
+      // signOption可以在JwtModule设定
+      // 或是在createToken时候设定
+      signOptions: {
+        expiresIn: jwtConfig.expiration
+      }
+    })
+  ],
+  controllers: [AuthController],
+  providers: [AuthService, LocalStrategy, JwtStrategy],
+  exports: [AuthService]
 })
 export class AuthModule {}

@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { jwtConfig } from './jwt.config'
-import { UsersService } from '../users/users.service'
+import { UserService } from '../user/user.service'
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly UsersService: UsersService
+    private readonly userService: UserService
   ) {}
 
-  async login(name: string, password: string) {
-    if (name !== password) {
-      const user = { name }
+  async login(username: string, password: string) {
+    if (username !== password) {
+      const user = { username }
       // 将使用者资讯加密
       const accessToken = this.jwtService.sign(user, {
         // 过期时间
@@ -27,9 +27,9 @@ export class AuthService {
     }
   }
 
-  async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.UsersService.findOne(username)
-    if (user && user.password === pass) {
+  async validateUser(username: string, pwd: string): Promise<any> {
+    const user = await this.userService.findOne(username)
+    if (user && user.password === pwd) {
       const { password, ...result } = user
       return result
     }

@@ -10,8 +10,20 @@ export class CategoryService {
     @InjectModel('Category') private readonly categoryModel: Model<Category>
   ) {}
 
-  async create(user: CategoryDto): Promise<Category> {
-    const createdCategory = new this.categoryModel(user)
+  async postOne(category: CategoryDto): Promise<Category> {
+    const createdCategory = new this.categoryModel(category)
     return await createdCategory.save()
+  }
+
+  async getList(): Promise<Category[]> {
+    return await this.categoryModel.find()
+  }
+
+  async putOne(id, req): Promise<Category> {
+    return this.categoryModel.findByIdAndUpdate(id, req)
+  }
+
+  async deleteOne(id: string): Promise<Category> {
+    return this.categoryModel.findByIdAndDelete(id)
   }
 }

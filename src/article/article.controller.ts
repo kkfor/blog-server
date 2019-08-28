@@ -1,4 +1,13 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Post,
+  Put,
+  Get,
+  Delete,
+  UseGuards,
+  Param
+} from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import { ArticleService } from './article.service'
 import { ArticleDto } from './dto/article.dto'
@@ -8,9 +17,28 @@ import { ArticleDto } from './dto/article.dto'
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
-  @Post('/create')
-  async create(@Body() article: ArticleDto) {
-    const createdArticle = await this.articleService.create(article)
-    return createdArticle
+  @Post()
+  async postOne(@Body() article: ArticleDto) {
+    return await this.articleService.postOne(article)
+  }
+
+  @Get(':id')
+  async getOne(@Param('id') id: string) {
+    return this.articleService.getOne(id)
+  }
+
+  @Get()
+  async getList() {
+    return this.articleService.getList()
+  }
+
+  @Put(':id')
+  async putOne(@Param('id') id: string, @Body() req) {
+    return this.articleService.putOne(id, req)
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
+    return this.articleService.deleteOne(id)
   }
 }

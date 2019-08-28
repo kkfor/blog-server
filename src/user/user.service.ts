@@ -14,7 +14,7 @@ export class UserService {
     return await this.userModel.findOne({username})
   }
   
-  async create(user: UserDto): Promise<User> {
+  async postOne(user: UserDto): Promise<User> {
     const createdUser = new this.userModel(user)
     return await createdUser.save()
   }

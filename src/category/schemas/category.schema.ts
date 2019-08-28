@@ -1,6 +1,10 @@
-import * as mongoose from 'mongoose'
+import { Schema } from 'mongoose'
 
-export const CategorySchema = new mongoose.Schema({
+export const CategorySchema = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
   slug: {
     type: String,
     required: true

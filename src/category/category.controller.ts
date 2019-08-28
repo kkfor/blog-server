@@ -9,8 +9,7 @@ export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Post('/create')
-  async create(@Body() category: CategoryDto) {
-    const createdCategory = await this.categoryService.create(category)
-    return createdCategory
+  async postOne(@Body() category: CategoryDto) {
+    return await this.categoryService.postOne(category)
   }
 }

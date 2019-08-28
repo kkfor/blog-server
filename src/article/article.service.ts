@@ -10,8 +10,28 @@ export class ArticleService {
     @InjectModel('Article') private readonly articleModel: Model<Article>
   ) {}
 
-  async create(user: ArticleDto): Promise<Article> {
+  async postOne(user: ArticleDto): Promise<Article> {
     const createdArticle = new this.articleModel(user)
     return await createdArticle.save()
+  }
+
+  async getOne(id: string) {
+    return this.articleModel.findById(id)
+  }
+
+  async putOne(id: string, req) {
+    const updatedAt = Date.now()
+    return this.articleModel.findByIdAndUpdate(id, {
+      updatedAt,
+      ...req
+    })
+  }
+
+  async getList() {
+    return this.articleModel.find()
+  }
+
+  async deleteOne(id: string) {
+    return this.articleModel.findByIdAndDelete(id)
   }
 }

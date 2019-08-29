@@ -14,7 +14,7 @@ export class AuthService {
     if (username !== password) {
       const user = { username }
       // 将使用者资讯加密
-      const accessToken = this.jwtService.sign(user, {
+      const token = this.jwtService.sign(user, {
         // 过期时间
         expiresIn: jwtConfig.expiration
         // algorithm:'RS256', // default是HMAC SHA256，也可以指定別的
@@ -22,7 +22,7 @@ export class AuthService {
 
       return {
         expiration: jwtConfig.expiration,
-        accessToken
+        token
       }
     }
   }

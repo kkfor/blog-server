@@ -6,7 +6,8 @@ import {
   Get,
   Delete,
   UseGuards,
-  Param
+  Param,
+  Query
 } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import { ArticleService } from './article.service'
@@ -28,8 +29,8 @@ export class ArticleController {
   }
 
   @Get()
-  async getList() {
-    return this.articleService.getList()
+  async getList(@Query() req: any) {
+    return this.articleService.getList(req)
   }
 
   @Put(':id')

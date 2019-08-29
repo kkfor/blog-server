@@ -27,8 +27,32 @@ export class ArticleService {
     })
   }
 
-  async getList() {
-    return this.articleModel.find()
+  async getList(req: any) {
+    const { page = 1, limit = 10, state = 1, category } = req
+    const sort = {
+      id: -1
+    }
+    const query: any = {
+      // state
+    }
+    if (category) {
+      query.category = category
+    }
+    console.log(query)
+    const data = await this.articleModel
+      .find(query)
+      .sort(sort)
+      .skip(limit * (page - 1))
+      .limit(limit)
+    const total = await this.articleModel.countDocuments(query)
+    const pages = Math.ceil(total / limit) || 1
+    return {
+      data,
+      limit,
+      page,
+      pages,
+      total
+    }
   }
 
   async deleteOne(id: string) {

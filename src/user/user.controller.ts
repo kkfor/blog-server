@@ -8,9 +8,8 @@ export class UserController {
     private readonly userService: UserService,
   ) {}
 
-  @Post('/create')
+  @Post('/register')
   async postOne(@Body() req: UserDto) {
-    const user = await this.userService.postOne(req)
-    return user
+    return await this.userService.postOne(req)
   }
 }

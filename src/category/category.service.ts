@@ -15,11 +15,15 @@ export class CategoryService {
     return await createdCategory.save()
   }
 
+  async getOne(id: string): Promise<Category> {
+    return await this.categoryModel.findById(id)
+  }
+
   async getList(): Promise<Category[]> {
     return await this.categoryModel.find()
   }
 
-  async putOne(id, req): Promise<Category> {
+  async putOne(id: string, req): Promise<Category> {
     return this.categoryModel.findByIdAndUpdate(id, req)
   }
 

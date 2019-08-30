@@ -38,7 +38,6 @@ export class ArticleService {
     if (category) {
       query.category = category
     }
-    console.log(query)
     const data = await this.articleModel
       .find(query)
       .sort(sort)

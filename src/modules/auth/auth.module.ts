@@ -1,15 +1,16 @@
 import { Module } from '@nestjs/common'
 import { JwtModule } from '@nestjs/jwt'
+import { PassportModule } from '@nestjs/passport';
+import { UserModule } from '../user/user.module'
 import { AuthService } from './auth.service'
 import { AuthController } from './auth.controller'
 import { JwtStrategy } from './jwt.strategy'
-import { LocalStrategy } from './local.strategy'
 import { jwtConfig } from './jwt.config'
-import { UserModule } from '../user/user.module'
 
 @Module({
   imports: [
     UserModule,
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     // 建立jsonwebtoken时的相关信息
     JwtModule.register({
       secret: jwtConfig.secret,
@@ -21,7 +22,7 @@ import { UserModule } from '../user/user.module'
     })
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  providers: [AuthService, JwtStrategy],
   exports: [AuthService]
 })
 export class AuthModule {}

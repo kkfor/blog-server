@@ -10,8 +10,8 @@ import {
   Req,
   Query
 } from '@nestjs/common'
-import { JwtAuthGuard } from '../../guards/auth.guard'
-import { HumanizedJwtAuthGuard } from '../../guards/humanized-auth.guard'
+import { JwtAuthGuard } from '../../guards'
+import { FriendlyJwtAuthGuard } from '../../guards'
 import { AuthGuard } from '@nestjs/passport'
 import { ArticleService } from './article.service'
 import { ArticleDto } from './dto/article.dto'
@@ -32,9 +32,8 @@ export class ArticleController {
   }
 
   @Get()
-  @UseGuards(HumanizedJwtAuthGuard)
+  @UseGuards(FriendlyJwtAuthGuard)
   async getList(@Query() req: any, @Req() request: any) {
-    console.log(request.isAuthenticated())
     return this.articleService.getList(req)
   }
 

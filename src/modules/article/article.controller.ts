@@ -34,6 +34,11 @@ export class ArticleController {
   @Get()
   @UseGuards(FriendlyJwtAuthGuard)
   async getList(@Query() req: any, @Req() request: any) {
+    const auth = request.isAuthenticated()
+    console.log(auth)
+    if(!auth) {
+      req.state = 1
+    }
     return this.articleService.getList(req)
   }
 

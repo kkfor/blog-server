@@ -33,7 +33,7 @@ export class ArticleService {
       id: -1
     }
     const query: any = {
-      // state
+      state
     }
     if (category) {
       query.category = category

@@ -4,6 +4,7 @@ import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module'
 import { ArticleModule } from './modules/article/article.module'
 import { CategoryModule } from './modules/category/category.module'
+import { TagModule } from './modules/tag/tag.module'
 import { dbConfig } from './app.config'
 
 @Module({
@@ -12,7 +13,8 @@ import { dbConfig } from './app.config'
     UserModule,
     AuthModule,
     ArticleModule,
-    CategoryModule
+    CategoryModule,
+    TagModule
   ]
 })
 

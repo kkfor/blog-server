@@ -4,5 +4,6 @@
 .vscode
 
 /dist
+/log
 
 app.config.ts

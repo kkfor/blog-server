@@ -33,12 +33,13 @@ export class ArticleService {
   }
 
   async getList(req: any) {
-    const { page = 1, limit = 10, state = 1, category } = req
+    const { page = 1, limit = 10, state, category } = req
     const sort = {
       id: -1
     }
-    const query: any = {
-      state
+    const query: any = {}
+    if(state) {
+      query.state = state
     }
     if (category) {
       const c = await this.categoryModel.findOne({ slug: category })

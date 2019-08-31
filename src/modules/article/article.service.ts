@@ -7,15 +7,16 @@ import { ArticleDto } from './dto/article.dto'
 @Injectable()
 export class ArticleService {
   constructor(
-    @InjectModel('Article') private readonly articleModel: Model<Article>
+    @InjectModel('Article') private readonly articleModel: Model<Article>,
+    @InjectModel('Category') private readonly categoryModel
   ) {}
 
-  async postOne(user: ArticleDto): Promise<Article> {
+  postOne(user: ArticleDto): Promise<Article> {
     const createdArticle = new this.articleModel(user)
     return createdArticle.save()
   }
 
-  async getOne(id: string) {
+  getOne(id: string) {
     return this.articleModel.findById(id)
   }
 
@@ -23,7 +24,7 @@ export class ArticleService {
     return this.articleModel.findOne({_id: id, state: 1})
   }
 
-  async putOne(id: string, req) {
+  putOne(id: string, req) {
     const updatedAt = Date.now()
     return this.articleModel.findByIdAndUpdate(id, {
       updatedAt,
@@ -40,11 +41,13 @@ export class ArticleService {
       state
     }
     if (category) {
-      query.category = category
+      const c = await this.categoryModel.findOne({ slug: category })
+      query.category = c._id
     }
     const data = await this.articleModel
       .find(query)
       .sort(sort)
+      .populate('category')
       .skip(limit * (page - 1))
       .limit(limit)
     const total = await this.articleModel.countDocuments(query)

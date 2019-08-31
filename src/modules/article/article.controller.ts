@@ -22,18 +22,21 @@ export class ArticleController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  async postOne(@Body() article: ArticleDto) {
-    return await this.articleService.postOne(article)
+  postOne(@Body() article: ArticleDto) {
+    return this.articleService.postOne(article)
   }
 
   @Get(':id')
-  async getOne(@Param('id') id: string) {
-    return this.articleService.getOne(id)
+  @UseGuards(FriendlyJwtAuthGuard)
+  getOne(@Param('id') id: string, @Req() request: any) {
+    const auth = request.isAuthenticated()
+    return auth ? this.articleService.getOne(id)
+    : this.articleService.getOneForUser(id)
   }
 
   @Get()
   @UseGuards(FriendlyJwtAuthGuard)
-  async getList(@Query() req: any, @Req() request: any) {
+  getList(@Query() req: any, @Req() request: any) {
     const auth = request.isAuthenticated()
     if(!auth) {
       req.state = 1
@@ -43,13 +46,13 @@ export class ArticleController {
 
   @UseGuards(AuthGuard('jwt'))
   @Put(':id')
-  async putOne(@Param('id') id: string, @Body() req) {
+  putOne(@Param('id') id: string, @Body() req) {
     return this.articleService.putOne(id, req)
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
-  async delete(@Param('id') id: string) {
+  delete(@Param('id') id: string) {
     return this.articleService.deleteOne(id)
   }
 }

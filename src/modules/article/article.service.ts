@@ -12,11 +12,15 @@ export class ArticleService {
 
   async postOne(user: ArticleDto): Promise<Article> {
     const createdArticle = new this.articleModel(user)
-    return await createdArticle.save()
+    return createdArticle.save()
   }
 
   async getOne(id: string) {
     return this.articleModel.findById(id)
+  }
+
+  getOneForUser(id: string) {
+    return this.articleModel.findOne({_id: id, state: 1})
   }
 
   async putOne(id: string, req) {

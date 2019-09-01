@@ -1,15 +1,15 @@
-import { Module } from '@nestjs/common';
+import { Module, MiddlewareConsumer } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module'
 import { ArticleModule } from './modules/article/article.module'
 import { CategoryModule } from './modules/category/category.module'
 import { TagModule } from './modules/tag/tag.module'
-import { dbConfig } from './app.config'
+import { DbUrl } from './app.config'
 
 @Module({
   imports: [
-    MongooseModule.forRoot(dbConfig.uri, { useNewUrlParser: true }),
+    MongooseModule.forRoot(DbUrl, { useNewUrlParser: true }),
     UserModule,
     AuthModule,
     ArticleModule,
@@ -18,4 +18,10 @@ import { dbConfig } from './app.config'
   ]
 })
 
-export class AppModule { }
+export class AppModule {
+  // configure(consumer: MiddlewareConsumer) {
+  //   consumer
+  //     .apply(CorsMiddleware)
+  //     .forRoutes('*');
+  // }
+}

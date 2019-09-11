@@ -39,7 +39,7 @@ export class ArticleController {
   getList(@Query() req: any, @Req() request: any) {
     const auth = request.isAuthenticated()
     if(!auth) {
-      req.state = 1
+      req.status = 1
     }
     return this.articleService.getList(req)
   }

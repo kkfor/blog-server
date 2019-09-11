@@ -4,5 +4,5 @@ export interface Article extends Document {
   readonly title: string;
   readonly content: string;
   readonly updatedAt: Date;
-  readonly state: number;
+  readonly status: number;
 }

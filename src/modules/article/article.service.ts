@@ -21,7 +21,7 @@ export class ArticleService {
   }
 
   getOneForUser(id: string) {
-    return this.articleModel.findOne({_id: id, state: 1})
+    return this.articleModel.findOne({_id: id, status: 1})
   }
 
   putOne(id: string, req) {
@@ -33,13 +33,13 @@ export class ArticleService {
   }
 
   async getList(req: any) {
-    const { page = 1, limit = 10, state, category } = req
+    const { page = 1, limit = 10, status, category } = req
     const sort = {
       id: -1
     }
     const query: any = {}
-    if(state) {
-      query.state = state
+    if(status) {
+      query.status = status
     }
     if (category) {
       const c = await this.categoryModel.findOne({ slug: category })

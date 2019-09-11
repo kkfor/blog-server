@@ -18,7 +18,7 @@ export const ArticleSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  state: {
+  status: {
     type: Number,
     default: 2 // 0:回收站 | 1:发布 | 2:草稿
   },

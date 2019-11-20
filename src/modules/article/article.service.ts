@@ -33,9 +33,12 @@ export class ArticleService {
   }
 
   async getList(req: any) {
-    const { page = 1, limit = 10, status, category } = req
-    const sort = {
+    const { page = 1, limit = 10, status, category, hot } = req
+    const sort: any = {
       id: -1
+    }
+    if(hot) {
+      sort['meta.views'] = -1
     }
     const query: any = {}
     if(status) {

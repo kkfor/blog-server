@@ -20,8 +20,11 @@ export class ArticleService {
     return this.articleModel.findById(id)
   }
 
-  getOneForUser(id: string) {
-    return this.articleModel.findOne({_id: id, status: 1})
+  async getOneForUser(id: string) {
+    const res: any = await this.articleModel.findOne({_id: id, status: 1})
+    res.meta.views++
+    res.save()
+    return res
   }
 
   putOne(id: string, req) {
@@ -34,12 +37,13 @@ export class ArticleService {
 
   async getList(req: any) {
     const { page = 1, limit = 10, status, category, hot } = req
-    const sort: any = {
-      id: -1
-    }
+    const sort: any = {}
     if(hot) {
       sort['meta.views'] = -1
+    } else {
+      sort.createdAt = -1
     }
+
     const query: any = {}
     if(status) {
       query.status = status

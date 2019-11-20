@@ -37,9 +37,12 @@ export class ArticleController {
   @Get()
   @UseGuards(FriendlyJwtAuthGuard)
   getList(@Query() req: any, @Req() request: any) {
+    req.limit = req.limit && Number(req.limit)
+    req.page = req.page && Number(req.page)
     const auth = request.isAuthenticated()
     if(!auth) {
-      req.state = 1
+      req.status = 1
+      req.limit = 10
     }
     return this.articleService.getList(req)
   }

@@ -1,9 +1,10 @@
-import { Module, MiddlewareConsumer } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { UserModule } from './modules/user/user.module';
+import { Module } from '@nestjs/common'
+import { MongooseModule } from '@nestjs/mongoose'
+import { UserModule } from './modules/user/user.module'
 import { AuthModule } from './modules/auth/auth.module'
 import { ArticleModule } from './modules/article/article.module'
 import { CategoryModule } from './modules/category/category.module'
+import { MenuModule } from './modules/menu/menu.module'
 import { TagModule } from './modules/tag/tag.module'
 import { DbUrl } from './app.config'
 
@@ -14,6 +15,7 @@ import { DbUrl } from './app.config'
     AuthModule,
     ArticleModule,
     CategoryModule,
+    MenuModule,
     TagModule
   ]
 })

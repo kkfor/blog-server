@@ -6,11 +6,11 @@ import { ArticleModule } from './modules/article/article.module'
 import { CategoryModule } from './modules/category/category.module'
 import { MenuModule } from './modules/menu/menu.module'
 import { TagModule } from './modules/tag/tag.module'
-import { DbUrl } from './app.config'
+import config from './app.config'
 
 @Module({
   imports: [
-    MongooseModule.forRoot(DbUrl, { useNewUrlParser: true }),
+    MongooseModule.forRoot(config.DbUrl, { useNewUrlParser: true }),
     UserModule,
     AuthModule,
     ArticleModule,

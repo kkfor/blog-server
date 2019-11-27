@@ -70,6 +70,13 @@ export class ArticleService {
   }
 
   async deleteOne(id: string) {
-    return this.articleModel.findByIdAndDelete(id)
+    const item = await this.articleModel.findById(id)
+    if(item.status !== 0) {
+      item.status = 0
+      item.save()
+      return item
+    } else {
+      return this.articleModel.findByIdAndDelete(id)
+    }
   }
 }

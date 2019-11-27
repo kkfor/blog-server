@@ -1,4 +1,13 @@
-import { Body, Controller, Post, Get, Put, Delete, Param, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Post,
+  Get,
+  Put,
+  Delete,
+  Param,
+  UseGuards
+} from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import { CategoryService } from './category.service'
 import { CategoryDto } from './dto/category.dto'
@@ -34,5 +43,4 @@ export class CategoryController {
   async deleteOne(@Param('id') id: string) {
     return await this.categoryService.deleteOne(id)
   }
-
 }

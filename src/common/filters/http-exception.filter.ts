@@ -16,7 +16,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     response.status(status).json({
       statusCode: status,
-      timestamp: new Date().toISOString(),
+      message: '请求失败',
       path: request.url
     })
   }

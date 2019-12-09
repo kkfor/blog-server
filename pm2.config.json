@@ -1,9 +1,9 @@
 {
   "name": "blog_server",
   "script": "dist/main.js",
-  "ignore_watch": [
-    "node_modules",
-    "log"
-  ],
+  "ignore_watch": ["node_modules", "log"],
+  "env": {
+    "NODE_ENV": "production"
+  },
   "error_file": "./log/pm2/error.log"
 }
